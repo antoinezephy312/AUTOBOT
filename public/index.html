@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPT-4 Control Center</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg navbar-dark site-nav">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <span class="brand-icon"><i class="fas fa-robot"></i></span>
+            <span class="brand-copy">
+              <strong>GPT-4</strong>
+              <small>Control Center</small>
+            </span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/">
+                  <i class="fas fa-home"></i>
+                  <span>Home</span>
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/step_by_step_guide">
+                  <i class="fas fa-map-signs"></i>
+                  <span>Guide</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="online_user">
+                  <i class="fas fa-signal"></i>
+                  <span>Status</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <span class="eyebrow">Welcome aboard</span>
+              <h1>Redesign your automation with confidence.</h1>
+              <p class="lead">
+                Paste your chatbot cookie, decide how commands should behave, and
+                ship an interactive experience without changing your existing
+                workflow.
+              </p>
+              <div class="hero-pillars">
+                <div class="pillar">
+                  <span class="label">Secure</span>
+                  <strong>Local only</strong>
+                </div>
+                <div class="pillar">
+                  <span class="label">Fast setup</span>
+                  <strong>Under 2 min</strong>
+                </div>
+                <div class="pillar">
+                  <span class="label">Uptime</span>
+                  <strong>24 / 7</strong>
+                </div>
+              </div>
+            </div>
+            <div class="hero-panel glass-card">
+              <header>
+                <h2>Paste your JSON cookie</h2>
+                <p>Handled locally in your browser — never stored.</p>
+              </header>
+              <form id="json-form" onsubmit="submitForm(event)">
+                <div class="form-group mb-0">
+                  <textarea
+                    id="json-data"
+                    class="form-control"
+                    placeholder="Paste your JSON data here..."
+                  ></textarea>
+                </div>
+              </form>
+              <footer class="panel-footer">
+                <p class="panel-note">
+                  Need a refresher? Visit the guide to walk through each step of
+                  the deployment process.
+                </p>
+                <button class="btn btn-ghost" onclick="commandList()">
+                  <i class="fas fa-rotate"></i>
+                  Refresh commands
+                </button>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="spotlight">
+        <div class="container">
+          <article class="spotlight-card glass-card">
+            <div class="spotlight-icon">
+              <i class="fas fa-shield-check"></i>
+            </div>
+            <div class="spotlight-copy">
+              <h3>Respect the workflow</h3>
+              <p>
+                Our tooling stays on the safe side. Provide a disposable account
+                when possible, keep credentials secure, and never deploy
+                malicious automations.
+              </p>
+              <p>
+                If the chatbot appears unresponsive, revisit this page and
+                update the configuration. We recommend dummy accounts to avoid
+                interruptions on your primary profile.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="commands" id="command-builder">
+        <div class="container">
+          <header class="section-head">
+            <span class="eyebrow">Configuration</span>
+            <h2>Command builder</h2>
+            <p>
+              Toggle the command tiles you need. Everything is clickable, so you
+              can move fast as the command list grows.
+            </p>
+          </header>
+
+          <div class="command-workspace">
+            <div class="command-columns">
+              <article class="command-panel" id="listOfCommands" data-panel="commands">
+                <div class="panel-headline">
+                  <div class="panel-icon"><i class="fas fa-list-check"></i></div>
+                  <div>
+                    <h3>Commands</h3>
+                    <p>Select which commands stay active for your bot.</p>
+                  </div>
+                </div>
+                <div class="panel-actions">
+                  <button class="command-action" onclick="selectAllCommands()">
+                    <i class="fas fa-check-double"></i>
+                    <span>Select everything</span>
+                  </button>
+                </div>
+                <div class="command-collection" data-collection role="list"></div>
+                <p class="empty-state" data-empty>
+                  Commands will appear here once loaded.
+                </p>
+
+                <button class="btn btn-success btn-block" onclick="selectAllCommands()">
+                  <i class="fas fa-check-double"></i>
+                  Select all commands
+                </button>
+                <div class="command-list" data-type="commands"></div>
+
+              </article>
+
+              <article class="command-panel" id="listOfCommandsEvent" data-panel="events">
+                <div class="panel-headline">
+                  <div class="panel-icon"><i class="fas fa-bolt"></i></div>
+                  <div>
+                    <h3>Event commands</h3>
+                    <p>Fine-tune automated responses triggered by events.</p>
+                  </div>
+                </div>
+                <div class="panel-actions">
+                  <button class="command-action" onclick="selectAllEvents()">
+                    <i class="fas fa-bolt-lightning"></i>
+                    <span>Toggle all events</span>
+                  </button>
+                </div>
+                <div class="command-collection" data-collection role="list"></div>
+                <p class="empty-state" data-empty>
+                  Event commands will appear here once loaded.
+                </p>
+                <button class="btn btn-success btn-block" onclick="selectAllEvents()">
+                  <i class="fas fa-bolt-lightning"></i>
+                  Select all events
+                </button>
+                <div class="command-list" data-type="handleEvent"></div>
+              </article>
+
+              <article class="command-panel" id="prefixOfCommands">
+                <div class="panel-headline">
+                  <div class="panel-icon"><i class="fas fa-hashtag"></i></div>
+                  <div>
+                    <h3>Command prefix</h3>
+                    <p>Type a prefix or use <strong>non-prefix</strong> to disable.</p>
+                  </div>
+                </div>
+                <label class="field-tile" for="inputOfPrefix">
+                  <span class="field-label">Prefix</span>
+                  <input
+                    type="text"
+                    id="inputOfPrefix"
+                    placeholder="Enter prefix or type 'non-prefix'"
+                  />
+                </label>
+              </article>
+
+              <article class="command-panel" id="adminOfCommands">
+                <div class="panel-headline">
+                  <div class="panel-icon"><i class="fas fa-user-shield"></i></div>
+                  <div>
+                    <h3>Admin UID</h3>
+                    <p>Assign a UID or keep the <strong>default</strong> admin.</p>
+                  </div>
+                </div>
+                <label class="field-tile" for="inputOfAdmin">
+                  <span class="field-label">Admin UID</span>
+                  <input
+                    type="text"
+                    id="inputOfAdmin"
+                    placeholder="Enter UID or type 'default'"
+                  />
+                </label>
+              </article>
+            </div>
+
+            <aside class="command-aside glass-card">
+              <h4>Before you deploy</h4>
+              <ul>
+                <li>Confirm the toggles match the commands you expect.</li>
+                <li>Align prefixes with the communities you manage.</li>
+                <li>Share cookies responsibly with teammates you trust.</li>
+              </ul>
+              <p>
+                Every card above is clickable. Come back anytime to refresh the
+                list, add new commands, or adjust your automation rules.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="agreement" aria-labelledby="agreement-title">
+        <div class="container">
+          <div class="agreement-card glass-card">
+            <div class="agreement-copy">
+              <h3 id="agreement-title">Ready to deploy?</h3>
+              <p>
+                Review the disclaimer and confirm you understand the terms. The
+                button unlocks as soon as you agree.
+              </p>
+            </div>
+            <div class="agreement-actions">
+              <label class="agreement-toggle" for="agreeCheckbox">
+                <input type="checkbox" id="agreeCheckbox" />
+                <span class="toggle-visual" aria-hidden="true">
+                  <span class="toggle-thumb"></span>
+                </span>
+                <span class="toggle-label">
+                  I have read, understood, and agreed to the Terms and
+                  Conditions.
+                </span>
+              </label>
+              <button
+                class="btn btn-primary"
+                id="submitButton"
+                onclick="State()"
+                disabled
+              >
+                Deploy configuration
+              </button>
+              <div id="result" class="result-message" role="alert"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-meta">
+          <span>Time: <strong id="time"></strong></span>
+          <span>Ping: <strong id="ping"></strong></span>
+        </div>
+        <p class="footer-note">Built for reliability and control.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
